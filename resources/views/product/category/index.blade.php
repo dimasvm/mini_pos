@@ -18,7 +18,7 @@
                         class="fa fa-plus"></i> Tambah Data</a>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped mb-3">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -30,7 +30,7 @@
                     <tbody>
                         @forelse ($productCategories as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $loop->iteration + $productCategories->firstItem() - 1 }}</td>
                                 <td>{{ $item->name }}</td>
                                 <td>{!! $item->description !!}</td>
                                 <td width="30%">
@@ -52,6 +52,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $productCategories->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>

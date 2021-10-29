@@ -3,7 +3,7 @@
 @section('title', 'Login')
 
 @section('content')
-    @error('username')
+    @error('email')
         <p class="text-danger">{{ $message }}</p>
     @enderror
 

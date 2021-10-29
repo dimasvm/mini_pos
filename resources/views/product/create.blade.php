@@ -23,11 +23,11 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="">Nama Produk</label>
-                                <input type="text" class="form-control rounded-0" name="name">
+                                <input type="text" class="form-control rounded-0" name="name" value="{{ old('name') }}">
                             </div>
                             <div class="form-group">
                                 <label for="">Deskripsi</label>
-                                <textarea class="ckeditor form-control rounded-0" name="description"></textarea>
+                                <textarea class="ckeditor form-control rounded-0" name="description">{{ old('description') }}</textarea>
                             </div>
                             <div class="form-group">
                                 <label for="">Harga Produk</label>
@@ -35,29 +35,25 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text">Rp.</span>
                                     </div>
-                                    <input type="number" name="price" class="form-control rounded-0">
+                                    <input type="number" name="price" class="form-control rounded-0" value="{{ old('price') }}">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="">Kategori Produk</label>
-                                <select name="product_category_id" class="form-control rounded-0 product_category_select2">
+                                <select name="product_category_id" class="form-control select2bs4 rounded-0 ">
                                     <option disabled selected>Pilih...</option>
                                     @foreach ($product_categories as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                        <option value="{{ $item->id }}" {{ old('product_category_id') == $item->id ? 'selected' : '' }}>{{ $item->name }}</option>
                                     @endforeach
                                 </select>
                             </div>
-                            <form id="upload-form" action="{{ route('product.photo_upload') }}"
-                                enctype="multipart/form-data" method="post">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="">Upload Foto Produk</label>
-                                    <input type="file" name="photo" class="form-control" accept=".jpg, .jpeg, .png"
-                                        onchange="upload(this)">
-                                    <img src="#" class="mt-3" alt="Product Photo" id="photo"
-                                        style="display: none;">
-                                </div>
-                            </form>
+                            <div class="form-group">
+                                <label for="">Upload Foto Produk</label>
+                                <input type="file" name="photo" class="form-control" accept=".jpg, .jpeg, .png"
+                                    onchange="readURL(this)">
+                                <img src="#" class="mt-3" alt="Product Photo" id="photo"
+                                    style="display: none;">
+                            </div>
                             <div class="form-group">
                                 <div class="progress progress-sm">
                                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-success"
@@ -79,6 +75,7 @@
 
 @push('css')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ asset('css/select2-bootstrap4.min.css') }}">
 @endpush
 
 @push('scripts')
@@ -88,8 +85,8 @@
 
     <script type="text/javascript">
         $(document).ready(function() {
+            $('select[name="product_category_id"]').select2({theme: 'bootstrap4'});
             $('.ckeditor').ckeditor();
-            $('.product_category_select2').select2();
 
         });
 

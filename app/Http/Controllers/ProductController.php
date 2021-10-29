@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate();
+        $products = Product::paginate(3);
         return view('product.index', compact('products'));
     }
 
@@ -44,7 +44,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|integer',
             'product_category_id' => 'required|integer',
-            'photo' => 'nullable|image|mimes:jpeg,png|max:1024'
+            'photo' => 'required|image|mimes:jpeg,png|max:1024'
         ]);
 
 
@@ -58,7 +58,7 @@ class ProductController extends Controller
         }
         $product->save();
 
-        return redirect()->json(['success' => 'Berhasil'])->with(['success', 'Berhasil tambah produk']);
+        return redirect()->route('product.index')->with(['success', 'Berhasil tambah produk']);
     }
 
     /**
@@ -98,7 +98,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|integer',
             'product_category_id' => 'required|integer',
-            'photo' => 'nullable|image|mimes:jpeg,png|max:1024'
+            'photo' => 'required|image|mimes:jpeg,png|max:1024'
         ]);
 
         $product->name = $request->name;

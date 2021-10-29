@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="card-body table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped mb-3">
                     <thead>
                         <tr>
                             <th>No.</th>
@@ -33,8 +33,11 @@
                     <tbody>
                         @forelse ($products as $item)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->name }}</td>
+                                <td>{{ $loop->iteration + $products->firstItem() - 1 }}</td>
+                                <td>
+                                    <img class="img-circle elevation-2 d-inline mr-2" src="{{ Storage::url($item->photo) }}" style="width: 50px; height: 50px;" alt="User Avatar">
+                                    {{ $item->name }}
+                                </td>
                                 <td><strong class="text-danger">Rp
                                         {{ number_format($item->price, 0, ',', '.') }}</strong>
                                 </td>
@@ -57,6 +60,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                {{ $products->links('pagination::bootstrap-4') }}
             </div>
         </div>
     </div>
